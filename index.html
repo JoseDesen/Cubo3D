@@ -25,6 +25,8 @@
     cursor="rayOrigin: mouse"
     raycaster="objects: .clickable"
     click="rotateCube()"
+    mouseenter="changeColor()"
+    mouseleave="resetColor()"
   ></a-entity>
 </a-scene>
 
@@ -35,6 +37,22 @@
     const cube = document.querySelector('a-box');
     // Rotacionar o cubo
     cube.setAttribute('rotation', '0 0 90');
+  }
+
+  // Função para mudar a cor do cubo
+  function changeColor() {
+    // Selecionar o cubo
+    const cube = document.querySelector('a-box');
+    // Mudar a cor do cubo
+    cube.setAttribute('material', 'color: #FF0000');
+  }
+
+  // Função para resetar a cor do cubo
+  function resetColor() {
+    // Selecionar o cubo
+    const cube = document.querySelector('a-box');
+    // Resetar a cor do cubo
+    cube.setAttribute('material', 'color: #FFC65D');
   }
 </script>
   </body>
