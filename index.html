@@ -1,59 +1,82 @@
-<script>
-// Importar a biblioteca Three.js
-import * as THREE from 'three';
 
-// Criar um renderer
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.getElementById('canvas'),
-  antialias: true
-});
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cubo 3D</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #canvas {
+      width: 600px;
+      height: 400px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Criar um renderer
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('canvas'),
+      antialias: true
+    });
 
-// Criar um cubo 3D
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
+    // Criar um cubo 3D
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
 
-// Adicionar o cubo à cena
-const scene = new THREE.Scene();
-scene.add(cube);
+    // Adicionar o cubo à cena
+    const scene = new THREE.Scene();
+    scene.add(cube);
 
-// Criar uma câmera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // Criar uma câmera
+    const camera = new THREE.PerspectiveCamera(75, 600 / 400, 0.1, 1000);
 
-// Definir a posição da câmera
-camera.position.z = 5;
+    // Definir a posição da câmera
+    camera.position.z = 5;
 
-// Renderizar a cena
-renderer.render(scene, camera);
+    // Renderizar a cena
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
 
-// Adicionar eventos de mouse
-let isDragging = false;
-let previousMousePosition = null;
+    // Adicionar eventos de mouse
+    let isDragging = false;
+    let previousMousePosition = null;
 
-document.addEventListener('mousedown', (event) => {
-  isDragging = true;
-  previousMousePosition = {
-    x: event.clientX,
-    y: event.clientY
-  };
-});
+    document.addEventListener('mousedown', (event) => {
+      isDragging = true;
+      previousMousePosition = {
+        x: event.clientX,
+        y: event.clientY
+      };
+    });
 
-document.addEventListener('mousemove', (event) => {
-  if (isDragging) {
-    const deltaMousePosition = {
-      x: event.clientX - previousMousePosition.x,
-      y: event.clientY - previousMousePosition.y
-    };
-    previousMousePosition = {
-      x: event.clientX,
-      y: event.clientY
-    };
-    cube.rotation.x += deltaMousePosition.y * 0.01;
-    cube.rotation.y += deltaMousePosition.x * 0.01;
-  }
-});
+    document.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        const deltaMousePosition = {
+          x: event.clientX - previousMousePosition.x,
+          y: event.clientY - previousMousePosition.y
+        };
+        previousMousePosition = {
+          x: event.clientX,
+          y: event.clientY
+        };
+        cube.rotation.x += deltaMousePosition.y * 0.01;
+        cube.rotation.y += deltaMousePosition.x * 0.01;
+      }
+    });
 
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
   </script>
+</body>
+</html>
